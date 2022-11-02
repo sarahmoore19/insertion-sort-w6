@@ -1,22 +1,6 @@
 // Insertion Sort out-of-place
 // Do not modify the original array
 function insertionSort(arr) {
-  /*
-  Pseudocode:
-
-  Copy the original array
-  Create an array to store the sorted values
-  While the array is not empty:
-  - make sure you have a console.log(sorted.join(',')) as your first line in the while loop
-  - Pop a value from the array
-  - Create a new spot at the end of the array with null to help with comparisons
-  - Walk through the sorted array in reverse order
-  - Check if the value to the left is smaller than the new value
-  - If so, you've reached the insertion point so exit the loop
-  - If not shift the value to the right by 1 and continue
-  - Insert the unsorted value at the break point
-  Return the sorted array
-  */
 
   let sorted = [arr.pop()];
 
@@ -42,24 +26,7 @@ function insertionSort(arr) {
 }
 
 
-// In-place Insertion Sort
-// Mutates the original array
 function insertionSortInPlace(arr) {
-  /*
-  Pseudocode:
-
-  Set a pointer dividing the array into sorted and unsorted halves
-  Repeat while the unsorted half is not empty:
-  - make sure you have a console.log(sorted.join(',')) as your first line in the while loop
-  - Grab the first value from the unsorted half
-  - For each value starting from the divider,
-  - Check if the value to the left is smaller than the unsorted value
-  - If so, you've reached the insertion point so exit the loop
-  - If not shift the value to the right by 1 and continue
-  - Insert the unsorted value at the break point
-  - Increment the dividing pointer and repeat
-  Return the mutated array
-  */
 
   let count = 0;
   while (count < arr.length) {
@@ -72,9 +39,40 @@ function insertionSortInPlace(arr) {
   return arr;
 }
 
-arr = [2,4,6,8,1,3,5,7,9];
-arr2 = [2,4,6,8,1,3,5,7,9];
+function recursiveSort1(arr, sortArr = [arr.pop()]){
+  if (sortArr[0] === undefined) return "Array cannot be empty";
+  if (arr.length === 0) return sortArr;
+  let val = arr.pop();
+  sortArr[sortArr.length] = null;
+  let i = sortArr.length - 1;
+  while (val < sortArr[i - 1]) {
+  sortArr[i] = sortArr[i - 1];
+  i--;
+  }
+  sortArr[i] = val;
+  return recursiveSort1(arr, sortArr);
+}
 
-console.log(insertionSort(arr))
+function recursiveSort2(arr, count = 0) {
+if (count === arr.length) return arr;
+for (let i = count; i > 0; i--) {
+  if (arr[i - 1] > arr[i]) [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]]
+  else break;
+}
+return recursiveSort2(arr, count + 1);
+}
+
+arr1 = [2,4,6,8,1,3,5,7,9];
+arr2 = [2,4,6,8,1,3,5,7,9];
+arr3 = [2,4,6,8,1,3,5,7,9,2,7,0,3,1,1,1,2,3,6,1,0,0,6,-3];
+arr4 = [2,4,6,8,1,3,5,7,9,2,7,0,3,1,1,1,2,3,6,1,0,0,6,-3];
+
+
+console.log(insertionSort(arr1))
 console.log(insertionSortInPlace(arr2))
+console.log(recursiveSort1(arr3))
+console.log(recursiveSort2(arr4))
+
+
+
 module.exports = [insertionSort, insertionSortInPlace];
