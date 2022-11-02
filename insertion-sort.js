@@ -18,8 +18,29 @@ function insertionSort(arr) {
   Return the sorted array
   */
 
-  // Your code here
+  let sorted = [arr.pop()];
+
+  while (arr.length) {
+    let val = arr.pop();
+
+    if (val <= sorted[0]) sorted.unshift(val);
+
+    else {
+    sorted.push(null);
+    for (let i = sorted.length - 1; i >= 0; i--) {
+
+      if (val >= sorted[i - 1]) {
+      sorted[i] = val;
+      break;
+      }
+
+      sorted[i] = sorted[i - 1];
+      }
+    }
+  }
+ return sorted;
 }
+
 
 // In-place Insertion Sort
 // Mutates the original array
@@ -40,7 +61,20 @@ function insertionSortInPlace(arr) {
   Return the mutated array
   */
 
-  // Your code here
+  let count = 0;
+  while (count < arr.length) {
+    for (let i = count; i > 0; i--) {
+      if (arr[i - 1] > arr[i]) [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]];
+      else break;
+    }
+    count++;
+  }
+  return arr;
 }
 
+arr = [2,4,6,8,1,3,5,7,9];
+arr2 = [2,4,6,8,1,3,5,7,9];
+
+console.log(insertionSort(arr))
+console.log(insertionSortInPlace(arr2))
 module.exports = [insertionSort, insertionSortInPlace];
